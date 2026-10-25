@@ -156,11 +156,31 @@ function initQuoteRotator(root) {
   }, 4000);
 }
 
+/* ---------- links to a place on the page (e.g. the header's #what-we-make) ----------
+   The browser jumps to the target before web fonts and images above it have
+   loaded; they can still change heights and push it down. Once they're in,
+   put the target back at the top, unless the visitor has scrolled already. */
+function settleHashTarget() {
+  const id = decodeURIComponent(location.hash.slice(1));
+  const target = id && document.getElementById(id);
+  if (!target) return;
+  let visitorScrolled = false;
+  const stop = () => {
+    visitorScrolled = true;
+  };
+  ['wheel', 'touchstart', 'keydown'].forEach((type) => addEventListener(type, stop, { once: true, passive: true }));
+  const loaded = document.readyState === 'complete' ? Promise.resolve() : new Promise((resolve) => addEventListener('load', resolve, { once: true }));
+  Promise.all([loaded, document.fonts?.ready]).then(() => {
+    if (!visitorScrolled) target.scrollIntoView({ behavior: 'instant', block: 'start' });
+  });
+}
+
 function init(root = document) {
   root.querySelectorAll('[data-quote-rotator]').forEach(initQuoteRotator);
 }
 
 initSceneToggle();
 initSceneClock();
+settleHashTarget();
 init();
 document.addEventListener('shopify:section:load', (event) => init(event.target));

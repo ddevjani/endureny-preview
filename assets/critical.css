@@ -74,13 +74,23 @@ main:focus { outline: none; }
 /* ---------- header ---------- */
 .section-header { position: fixed; inset: 0 0 auto; z-index: 40; }
 .site-header {
-  height: var(--header-h); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 20px;
+  position: relative; height: var(--header-h); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 20px;
   padding: 0 clamp(14px, 4vw, 48px);
   background: linear-gradient(180deg, rgb(5 7 13 / .72), rgb(5 7 13 / 0));
 }
 .site-header__logo { display: flex; align-items: center; color: #fff; --logo-accent: var(--red); }
 .site-header__logo svg { height: 38px; width: auto; filter: drop-shadow(0 1px 8px rgb(0 0 0 / .45)); }
 .site-header__nav { display: flex; align-items: center; justify-content: flex-end; gap: 2px; }
+.site-header__link {
+  padding: 12px 10px; font-family: var(--f-brand); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; white-space: nowrap;
+  color: #fff; text-shadow: 0 1px 10px rgb(0 0 0 / .6);
+}
+.site-header__link:hover { text-decoration: underline; text-underline-offset: 5px; }
+/* Phones: no room beside the icons, so the link takes the empty left side. */
+@media (max-width: 600px) {
+  .site-header__link { position: absolute; left: clamp(6px, 3vw, 40px); top: 50%; translate: 0 -50%; max-width: calc(50% - 90px); padding: 8px 6px; font-size: 9px; line-height: 1.45; letter-spacing: .14em; white-space: normal; }
+}
+[id="what-we-make"] { scroll-margin-top: var(--header-h); }
 .icon-link, .icon-button {
   position: relative; width: 44px; height: 44px; display: grid; place-items: center;
   border: 0; border-radius: 50%; background: none; cursor: pointer; color: inherit;
