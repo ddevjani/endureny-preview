@@ -106,7 +106,8 @@
   will-change: transform, opacity;
 }
 
-.crawl__note { max-width: 760px; margin: 4vh auto 0; text-align: center; font-size: 12px; line-height: 1.5; color: var(--paper-70); text-shadow: 0 1px 10px rgb(0 0 0 / .6); }
+.beat--note { min-height: 18vh; }
+.beat--note .beat__text { font-size: 13px; font-weight: 500; line-height: 1.5; letter-spacing: 0; color: var(--paper-80); text-shadow: 0 1px 10px rgb(0 0 0 / .7); }
 
 /* Polaroids between beats on phones; beside the next beat on wide screens. */
 .polaroid-slot { display: flex; align-items: flex-start; justify-content: center; width: 100%; padding: 2vh 6%; }
