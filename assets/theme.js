@@ -159,7 +159,14 @@ function initQuoteRotator(root) {
 /* ---------- links to a place on the page (e.g. the header's #what-we-make) ----------
    The browser jumps to the target before web fonts and images above it have
    loaded; they can still change heights and push it down. Once they're in,
-   put the target back at the top, unless the visitor has scrolled already. */
+   put the target back at the top, but only if it has merely drifted (less
+   than half a screen) and the visitor hasn't started moving: scrollbar drags
+   and assistive tech send no wheel or key events, so distance is the check. */
+function enableSmoothScroll() {
+  const enable = () => document.documentElement.classList.add('smooth-scroll');
+  ['pointerdown', 'keydown'].forEach((type) => addEventListener(type, enable, { once: true, passive: true }));
+}
+
 function settleHashTarget() {
   const id = decodeURIComponent(location.hash.slice(1));
   const target = id && document.getElementById(id);
@@ -168,10 +175,11 @@ function settleHashTarget() {
   const stop = () => {
     visitorScrolled = true;
   };
-  ['wheel', 'touchstart', 'keydown'].forEach((type) => addEventListener(type, stop, { once: true, passive: true }));
+  ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((type) => addEventListener(type, stop, { once: true, passive: true }));
   const loaded = document.readyState === 'complete' ? Promise.resolve() : new Promise((resolve) => addEventListener('load', resolve, { once: true }));
   Promise.all([loaded, document.fonts?.ready]).then(() => {
-    if (!visitorScrolled) target.scrollIntoView({ behavior: 'instant', block: 'start' });
+    const drift = Math.abs(target.getBoundingClientRect().top);
+    if (!visitorScrolled && drift < window.innerHeight / 2) target.scrollIntoView({ behavior: 'instant', block: 'start' });
   });
 }
 
@@ -182,5 +190,6 @@ function init(root = document) {
 initSceneToggle();
 initSceneClock();
 settleHashTarget();
+enableSmoothScroll();
 init();
 document.addEventListener('shopify:section:load', (event) => init(event.target));

@@ -5,5 +5,5 @@
   font: 600 10px/1.2 'Manrope', system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase;
   backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); pointer-events: none;
 }
-@media (max-width: 520px) { .preview-badge { top: auto; bottom: 64px; left: 50%; translate: -50% 0; white-space: nowrap; } }
+@media (max-width: 600px) { .preview-badge { top: auto; bottom: 64px; left: 50%; translate: -50% 0; white-space: nowrap; } }
 .preview-notice { margin: 8px 0 0; font-size: 13px; line-height: 1.4; color: #fff; }
