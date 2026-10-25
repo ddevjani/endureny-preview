@@ -1,0 +1,3 @@
+# Design preview for review only; the store will live at endureny.com.
+User-agent: *
+Disallow: /

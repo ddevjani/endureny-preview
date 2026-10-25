@@ -1,0 +1,9 @@
+/* Static design preview only (scripts/preview/export.mjs). */
+.preview-badge {
+  position: fixed; top: 22px; left: clamp(12px, 3vw, 40px); z-index: 60; margin: 0; padding: 5px 10px; border-radius: 999px;
+  background: rgb(5 7 13 / .7); border: 1px solid rgb(255 255 255 / .22); color: #fff;
+  font: 600 10px/1.2 'Manrope', system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase;
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); pointer-events: none;
+}
+@media (max-width: 520px) { .preview-badge { top: auto; bottom: 64px; left: 50%; translate: -50% 0; white-space: nowrap; } }
+.preview-notice { margin: 8px 0 0; font-size: 13px; line-height: 1.4; color: #fff; }
